@@ -23,6 +23,12 @@ function generateBombs(bombsNum, maxSquares) {
     return bombs;
 }
 
+function setMessage(message) {
+    const score = document.getElementById('score');
+    score.innerHTML = message;
+}
+
+
 
 
 // funzione per generare la griglia di gioco 
@@ -58,10 +64,15 @@ function play(e) {
     console.log(maxScore);
     let message = 'Seleziona la difficoltà e premi play'
 
-    function setMessage(message) {
-        const score = document.getElementById('score');
-        score.innerHTML = message;
+   // funzione per mostrare tutte le bombe
+   function showAllBombs(bombs) {
+    const squares = document.querySelectorAll('.square');
+    for (let square of squares) {
+        if (bombs.includes(parseInt(square.innerText))) {
+            square.classList.add('bomb');
+        }
     }
+}
 
     // funzione per creare i quadratini
     function drawSquare(index, numSquares) {
@@ -74,6 +85,7 @@ function play(e) {
             if (bombs.includes(parseInt(this.innerText))) {
                 square.classList.add('bomb');
                 message = `Hai perso! Il tuo punteggio è di ${score}`
+                showAllBombs (bombs);
             } else {
                 square.classList.add('noBomb');
                 score++;
@@ -87,15 +99,9 @@ function play(e) {
 
     }
 
-    
-    
-
-
     let bombs = generateBombs(BOMBS_NUM, squareNumbers);
     
     console.log(bombs);
-
-
 
     // ciclo for per generare i quadratini all'interno della griglia
     for (let i = 1; i <= squareNumbers; i++) {
