@@ -38,3 +38,8 @@ main {
 .bomb {
     background-color: rgb(145, 10, 10);
 }
+
+.square span {
+    opacity: 0;
+}
+

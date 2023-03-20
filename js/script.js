@@ -63,6 +63,7 @@ function play(e) {
     let maxScore = squareNumbers - BOMBS_NUM;
     console.log(maxScore);
     let message = 'Seleziona la difficoltà e premi play'
+    let gameOver = false;
 
    // funzione per mostrare tutte le bombe
    function showAllBombs(bombs) {
@@ -70,6 +71,7 @@ function play(e) {
     for (let square of squares) {
         if (bombs.includes(parseInt(square.innerText))) {
             square.classList.add('bomb');
+            square.innerHTML = `<img src="./img/OIP.jpeg" alt="" class="img-fluid">`
         }
     }
 }
@@ -80,18 +82,23 @@ function play(e) {
         square.classList.add('square');
         square.style.width = `calc(100% / ${numSquares})`;
         square.style.height = square.style.width;
-        square.innerHTML = index;
+        square.innerHTML = `<span>${index}</span>`;
         square.addEventListener('click', function () {
-            if (bombs.includes(parseInt(this.innerText))) {
-                square.classList.add('bomb');
-                message = `Hai perso! Il tuo punteggio è di ${score}`
-                showAllBombs (bombs);
-            } else {
-                square.classList.add('noBomb');
-                score++;
-                message = score === maxScore ? `Hai vinto! Il tuo punteggio è di: ${score}` : `Il tuo punteggio è ${score}` ;
+            if (!square.classList.contains('noBomb') && !gameOver) {
+                if (bombs.includes(parseInt(this.innerText))) {
+                    square.classList.add('bomb');
+                    message = `Hai perso! Hai totalizzato un punteggio di ${score}`
+                    showAllBombs (bombs);
+                    square.innerHTML = `<img src="./img/OIP.jpeg" alt="" class="img-fluid">`
+                    gameOver = true;
+                } else {
+                    square.classList.add('noBomb');
+                    score++;
+                    message = score === maxScore ? `Hai vinto! Hai totalizzato un punteggio di: ${score}` : `Il tuo punteggio è ${score}` ;
+                }
+                setMessage(message);
             }
-            setMessage(message);
+            
             
 
         })
