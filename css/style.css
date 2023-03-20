@@ -1,0 +1,36 @@
+.wrapper {
+    width: 100%;
+    height: 100vh;
+    background-color: #80fed5;
+}
+
+header, footer {
+    background-color: white;
+    height: 80px;
+}
+
+main {
+    height: calc(100% - 160px);
+    overflow-y: auto;
+
+}
+
+#playground {
+    width: 500px;
+    height: 500px;
+    
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.square {
+   cursor: pointer;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.noBomb {
+    background-color: pink;
+}
