@@ -7,7 +7,21 @@ Al termine della partita il software deve comunicare il punteggio, cioè il nume
 
 // FUNZIONI
 
+function getRndNumber(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
+function generateBombs(bombsNum, maxSquares) {
+    let bombs = [];
+    while (bombs.length < bombsNum) {
+        let bomb = getRndNumber(1, maxSquares);
+        if (!bombs.includes(bomb)) {
+            bombs.push(bomb);
+        } 
+        
+    }
+    return bombs;
+}
 
 
 
@@ -38,42 +52,49 @@ function play(e) {
     let squarePerRow = Math.sqrt(squareNumbers);
     console.log(squarePerRow);
 
+    const BOMBS_NUM = 16;
+    let score = 0;
+    let maxScore = squareNumbers - BOMBS_NUM;
+    console.log(maxScore);
+    let message = 'Seleziona la difficoltà e premi play'
+
+    function setMessage(message) {
+        const score = document.getElementById('score');
+        score.innerHTML = message;
+    }
+
     // funzione per creare i quadratini
-    function drawSquare (index, numSquares) {
+    function drawSquare(index, numSquares) {
         const square = document.createElement('div');
         square.classList.add('square');
         square.style.width = `calc(100% / ${numSquares})`;
         square.style.height = square.style.width;
         square.innerHTML = index;
-        square.addEventListener('click', function (){
-            square.classList.add('noBomb')
+        square.addEventListener('click', function () {
+            if (bombs.includes(parseInt(this.innerText))) {
+                square.classList.add('bomb');
+                message = `Hai perso! Il tuo punteggio è di ${score}`
+            } else {
+                square.classList.add('noBomb');
+                score++;
+                message = score === maxScore ? `Hai vinto! Il tuo punteggio è di: ${score}` : `Il tuo punteggio è ${score}` ;
+            }
+            setMessage(message);
+            
+
         })
         return square;
-    
+
     }
-    
-    function getRndNumber (min, max) {
-        return Math.floor(Math.random() * (max - min + 1) ) + min;
-    }
+
     
     
-    const BOMBS_NUM = 16;
-    
-    function generateBombs (bombsNum, maxSquares) {
-        let bombs = [];
-        while (bombs.lenght < bombsNum) {
-            let bomb = getRndNumber(1, maxSquares);
-            if (!bombs.includes(bomb)) {
-                bombs.push(bomb);
-            }
-        }
-        return bombs;
-    }
-    
-    let bombs = generateBombs (BOMBS_NUM, squareNumbers);
+
+
+    let bombs = generateBombs(BOMBS_NUM, squareNumbers);
     
     console.log(bombs);
-    
+
 
 
     // ciclo for per generare i quadratini all'interno della griglia

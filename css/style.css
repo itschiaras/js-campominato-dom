@@ -34,3 +34,7 @@ main {
 .noBomb {
     background-color: pink;
 }
+
+.bomb {
+    background-color: rgb(145, 10, 10);
+}
